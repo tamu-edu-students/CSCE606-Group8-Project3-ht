@@ -49,6 +49,19 @@ class User < ApplicationRecord
     name.presence || email.to_s.split("@").first
   end
 
+  # Role helpers
+  def admin?
+    sysadmin?
+  end
+
+  def agent?
+    staff?
+  end
+
+  def requester?
+    user?
+  end
+
   private
 
   def normalize_email
