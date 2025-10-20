@@ -20,6 +20,8 @@ As a user, I can edit my ticket’s description before it is picked up by staff 
 
 As a user, I can close my own ticket if I no longer need help. (2)
 
+As a user, I can login to my account securely with my google account. (2)
+
 AS STAFF (APPROVER / AGENT)
 11) As staff, I can see a dashboard of tickets pending my approval so I can process requests. (5)
 12) As staff, I can filter pending tickets by ticket type, priority, and submitter so I can find items quickly. (5)
@@ -33,6 +35,7 @@ AS STAFF (APPROVER / AGENT)
 20) As staff, I can upload attachments to the ticket to share drafts or evidence. (3)
 21) As staff, I can reassign a ticket to a different team if misrouted. (3)
 22) As staff, I can bulk-approve or bulk-reassign selected tickets to speed up processing. (8)
+23) As staff, I can login to my account securely with my google account. (2)
 
 AS A SYSADMIN (CONFIGURATION)
 23) As a sysadmin, I can create ticket types with a name and description so the catalog reflects our processes. (3)
@@ -44,3 +47,7 @@ AS A SYSADMIN (CONFIGURATION)
 29) As a sysadmin, I can create and manage teams (name, description, members) so tickets can be routed. (5)
 30) As a sysadmin, I can configure status values and basic workflow transitions so the lifecycle matches our process. (8)
 31) As a sysadmin, I can define visibility of fields (user-visible vs staff-only) to control who sees what. (5)
+32) As a sysadmin, I can login to my account securely with my google account. (2)
+33) As a sysadmin, I can delete user accounts. (2)
+34) As a sysadmin, I can create user accounts. (2)
+35) As a sysadmin, I can edit user acconts. (2)
