@@ -16,7 +16,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(status: "open") # default status
     authorize @ticket
   end
-  
+
   def create
     @ticket = Ticket.new(ticket_params)
     @ticket.requester = current_user

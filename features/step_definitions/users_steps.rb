@@ -90,11 +90,10 @@ Then("I should be denied access") do
   # Be flexible: either see a flash, or the page returns 403/401.
   denied = page.has_content?("Not authorized") ||
            page.has_content?("You are not authorized") ||
-           (page.respond_to?(:status_code) && [401, 403].include?(page.status_code))
+           (page.respond_to?(:status_code) && [ 401, 403 ].include?(page.status_code))
   expect(denied).to be(true), "Expected an authorization failure (flash or 401/403), but didn't detect one"
 end
 
 When('I select {string} from {string}') do |option, field_label|
   select option, from: field_label
 end
-

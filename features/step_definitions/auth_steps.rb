@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "omniauth"
 
 Given("OmniAuth is in test mode") do
