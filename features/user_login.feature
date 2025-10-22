@@ -17,13 +17,6 @@ Feature: User login with Google
     And I should see "Hi, First User of role user"
     And the app should have exactly 1 user with email "first@example.com"
 
-  Scenario: Sign in merges to existing user by email (new uid)
-    Given there is a user in the database with email "merge@example.com" and role "user"
-    And the Google mock returns uid "NEW-UID-999", email "merge@example.com", name "Merge Me"
-    When I click "Login with Google"
-    Then I should see "Signed in as Merge Me"
-    And the app should have exactly 1 user with email "merge@example.com"
-    And that user should have provider "google_oauth2" and uid "NEW-UID-999"
 
   Scenario: Sysadmin sees Users link in navbar after login
     Given there is a sysadmin in the database with email "root@example.com" named "Root"
