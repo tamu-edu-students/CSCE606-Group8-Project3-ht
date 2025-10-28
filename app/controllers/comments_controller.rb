@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
       redirect_to @ticket, notice: "Comment added successfully."
     else
       flash[:alert] = @comment.errors.full_messages.to_sentence
-      redirect_to @ticket, status: :unprocessable_entity
+      redirect_to @ticket, status: :unprocessable_content
     end
   end
 
