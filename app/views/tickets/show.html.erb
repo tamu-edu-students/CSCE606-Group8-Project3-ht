@@ -6,6 +6,20 @@
   </nav>
 
   <h1><%= @ticket.subject %></h1>
+  <div class="headline-bar">
+    <div class="headline-left">
+      <%= link_to "Back", tickets_path, class: "btn btn-secondary" %>
+      <%= link_to "Edit", edit_ticket_path(@ticket), class: "btn btn-primary" %>
+    </div>
+    <div class="headline-right">
+      <% if policy(@ticket).close? %>
+        <%= button_to "Close Ticket", close_ticket_path(@ticket), method: :patch, data: { confirm: "Close this ticket?" }, class: "btn btn-danger-outline" %>
+      <% end %>
+      <% if policy(@ticket).destroy? %>
+        <%= button_to "Destroy", ticket_path(@ticket), method: :delete, data: { confirm: "Delete this ticket?" }, class: "btn btn-danger" %>
+      <% end %>
+    </div>
+  </div>
 
   <section class="ticket-details">
     <dl class="details-list">
@@ -44,34 +58,21 @@
     <div class="prose"><%= simple_format(@ticket.description) %></div>
   </section>
 
-  <aside class="ticket-actions">
-    <div class="actions-row">
-      <%= link_to "Edit", edit_ticket_path(@ticket), class: "btn" %>
-      <%= link_to "Back", tickets_path, class: "btn btn-secondary" %>
-    </div>
-
-    <% if policy(@ticket).assign? %>
+  <% if policy(@ticket).assign? %>
+    <section class="assign-section">
       <div class="assign-card">
         <%= form_with(model: @ticket, url: assign_ticket_path(@ticket), method: :patch, local: true) do |form| %>
-          <%= form.label :assignee_id, "Assign to agent:" %>
-          <%= form.collection_select :assignee_id, User.where(role: :staff), :id, :name, include_blank: "Unassigned" %>
-          <%= form.submit "Assign" %>
+          <div class="field">
+            <%= form.label :assignee_id, "Assign to agent:" %>
+            <%= form.collection_select :assignee_id, User.where(role: [:staff, :agent]), :id, :name, include_blank: "Unassigned" %>
+          </div>
+          <div class="actions-row">
+            <%= form.submit "Assign", class: "btn" %>
+          </div>
         <% end %>
       </div>
-    <% end %>
-
-    <% if policy(@ticket).close? %>
-      <div class="close-card">
-        <%= button_to "Close Ticket", close_ticket_path(@ticket), method: :patch, data: { confirm: "Close this ticket?" } %>
-      </div>
-    <% end %>
-
-    <% if policy(@ticket).destroy? %>
-      <div class="danger-zone">
-        <%= button_to "Destroy", ticket_path(@ticket), method: :delete, data: { confirm: "Delete this ticket?" } %>
-      </div>
-    <% end %>
-  </aside>
+    </section>
+  <% end %>
 
   <section class="ticket-comments">
     <h2>Comments (<%= @comments.size %>)</h2>
@@ -97,10 +98,10 @@
   <% if policy(@comment).create? %>
     <section class="comment-form">
       <h3>Add a Comment</h3>
-      <%= form_with(model: [@ticket, @comment]) do |form| %>
+      <%= form_with(model: [@ticket, @comment], local: true, html: { class: "form-card" }) do |form| %>
         <div class="field">
           <%= form.label :body, "Comment" %>
-          <%= form.text_area :body %>
+          <%= form.text_area :body, rows: 10, cols: 80 %>
         </div>
 
         <% if current_user.agent? || current_user.admin? %>
@@ -110,8 +111,8 @@
           </div>
         <% end %>
 
-        <div class="actions">
-          <%= form.submit "Post Comment" %>
+        <div class="actions-row">
+          <%= form.submit "Post Comment", class: "btn btn-primary" %>
         </div>
       <% end %>
     </section>

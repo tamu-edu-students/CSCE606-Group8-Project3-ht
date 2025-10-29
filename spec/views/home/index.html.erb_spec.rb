@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "home/index.html.erb", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'renders the welcome heading' do
+    render
+    expect(rendered).to include('Welcome')
+  end
 end

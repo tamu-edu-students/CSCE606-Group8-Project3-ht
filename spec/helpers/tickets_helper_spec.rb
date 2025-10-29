@@ -11,5 +11,7 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe TicketsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'is available as a helper module' do
+    expect(helper).to be_a(TicketsHelper)
+  end
 end
