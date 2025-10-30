@@ -56,6 +56,42 @@ RSpec.describe "Tickets", type: :request do
     end
   end
 
+  describe "POST /tickets (round-robin assignment)" do
+    before do
+      Setting.set("assignment_strategy", "round_robin")
+      Setting.set("last_assigned_index", "-1") # so first computed becomes 0
+    end
+
+    it "assigns the next agent in rotation and advances index" do
+      agent1 = create(:user, :agent)
+      agent2 = create(:user, :agent)
+
+      sign_in(requester)
+
+      expect {
+        post tickets_path, params: { ticket: { subject: "RR1", description: "d", category: Ticket::CATEGORY_OPTIONS.first } }
+      }.to change(Ticket, :count).by(1)
+      t1 = Ticket.order(:created_at).last
+      expect(t1.assignee).to eq(agent1)
+
+      expect {
+        post tickets_path, params: { ticket: { subject: "RR2", description: "d", category: Ticket::CATEGORY_OPTIONS.first } }
+      }.to change(Ticket, :count).by(1)
+      t2 = Ticket.order(:created_at).last
+      expect(t2.assignee).to eq(agent2)
+
+      # index stored as string
+      expect(Setting.get("last_assigned_index")).to eq("1")
+    end
+
+    it "does not assign when no agents exist" do
+      sign_in(requester)
+      post tickets_path, params: { ticket: { subject: "RR none", description: "d", category: Ticket::CATEGORY_OPTIONS.first } }
+      t = Ticket.order(:created_at).last
+      expect(t.assignee).to be_nil
+    end
+  end
+
     it "defaults priority to medium when not provided" do
       expect do
         post tickets_path, params: {
@@ -104,6 +140,18 @@ RSpec.describe "Tickets", type: :request do
         delete ticket_path(ticket)
       }.to raise_error(Pundit::NotAuthorizedError)
     end
+
+    it "redirects with alert when update fails" do
+      sign_in(requester)
+      allow_any_instance_of(Ticket).to receive(:update).with(status: :resolved).and_return(false)
+      fake_errors = double(full_messages: [ "Something went wrong" ], any?: true)
+      allow_any_instance_of(Ticket).to receive(:errors).and_return(fake_errors)
+
+      patch close_ticket_path(ticket)
+      expect(response).to redirect_to(ticket_path(ticket))
+      follow_redirect!
+      expect(response.body).to include("Something went wrong")
+    end
   end
 
   describe "PATCH /tickets/:id" do
@@ -127,6 +175,17 @@ RSpec.describe "Tickets", type: :request do
       ticket.reload
 
       expect(ticket.status).to eq("open")
+    end
+
+    it "renders :unprocessable_content when update fails" do
+      agent = create(:user, :agent)
+      sign_in(agent)
+      allow_any_instance_of(Ticket).to receive(:update).and_return(false)
+      fake_errors = double(full_messages: [ "Subject can't be blank" ], any?: true)
+      allow_any_instance_of(Ticket).to receive(:errors).and_return(fake_errors)
+
+      patch ticket_path(ticket), params: { ticket: { subject: "" } }
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 
