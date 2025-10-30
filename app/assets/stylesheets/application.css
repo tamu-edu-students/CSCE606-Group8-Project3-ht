@@ -283,3 +283,11 @@ input, select, textarea { font-size: 1rem; }
 .ticket-actions { margin-top: 1.5rem; }
 .actions-bar { gap: .75rem; }
 .comments-list hr { border: none; border-top: 1px solid #eee; margin: 0.5rem 0; }
+
+/* Users show: slightly wider and table layout */
+.user-show { max-width: 64rem; margin: 1.5rem auto; padding: 0 1rem; }
+.details-table { width: 100%; max-width: 48rem; margin: 0 auto; border-collapse: collapse; border: 1px solid #eee; background: #fff; }
+.details-table th, .details-table td { padding: 0.6rem 0.85rem; }
+.details-table th { background: #fafafa; color: #333; font-weight: 600; width: 240px; text-align: left; }
+.details-table td { text-align: center; }
+.details-table tr + tr th, .details-table tr + tr td { border-top: 1px solid #eee; }
