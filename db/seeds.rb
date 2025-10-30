@@ -84,7 +84,7 @@ puts "Users seeded: #{User.count}"
 
 # === Tickets ===
 # Valid enums per model:
-# status:   { open: 0, pending: 1, resolved: 2, closed: 3 }
+# status:   { open: 0, in_progress: 1, on_hold: 2, resolved: 3 }
 # priority: { low: 0, medium: 1, high: 2 }
 # category: must be in Ticket::CATEGORY_OPTIONS = ["Technical Issue","Account Access","Feature Request"]
 
@@ -92,7 +92,7 @@ tickets_attrs = [
   {
     subject:      "App crash on ticket submission",
     description:  "Every time I try to submit a ticket, the app crashes with a 500 error.",
-    status:       :open,
+    status:       :on_hold,
     priority:     :high,
     requester:    requester,
     assignee:     agent1,
@@ -101,7 +101,7 @@ tickets_attrs = [
   {
     subject:      "Cannot change account password",
     description:  "The password reset link redirects to an expired page.",
-    status:       :pending,
+    status:       :in_progress,
     priority:     :medium,              # was :normal → fixed to :medium
     requester:    requester,
     assignee:     agent1,
@@ -119,12 +119,12 @@ tickets_attrs = [
   {
     subject:      "Billing discrepancy for premium plan",
     description:  "Charged twice for the same month on my credit card statement.",
-    status:       :closed,
+    status:       :resolved,
     priority:     :high,
     requester:    requester2,
     assignee:     agent2,
     category:     "Technical Issue"     # constrained to allowed options
-    # closed_at will be auto-set by before_save since status is :closed
+    # closed_at will be auto-set by before_save since status is :resolved
   },
   {
     subject:      "Resolved: UI glitch on dashboard",

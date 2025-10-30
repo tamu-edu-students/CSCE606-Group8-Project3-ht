@@ -12,7 +12,7 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe 'enums' do
-    it { should define_enum_for(:status).with_values(open: 0, pending: 1, resolved: 2, closed: 3) }
+    it { should define_enum_for(:status).with_values(open: 0, in_progress: 1, on_hold: 2, resolved: 3) }
     it { should define_enum_for(:priority).with_values(low: 0, medium: 1, high: 2) }
   end
 
@@ -32,17 +32,17 @@ RSpec.describe Ticket, type: :model do
     end
   end
 
-  describe '#set_closed_at' do
-    context 'when status changes to closed' do
+  describe '#track_resolution_timestamp' do
+    context 'when status changes to resolved' do
       it 'sets closed_at timestamp' do
-        ticket.update(status: :closed)
+        ticket.update(status: :resolved)
         expect(ticket.closed_at).to be_present
       end
     end
 
-    context 'when status changes from closed to another' do
+    context 'when status changes from resolved to another' do
       it 'clears closed_at timestamp' do
-        ticket.update(status: :closed)
+        ticket.update(status: :resolved)
         ticket.update(status: :open)
         ticket.reload
         expect(ticket.closed_at).to be_nil

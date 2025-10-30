@@ -67,9 +67,27 @@
 }
 
 .status-open { background: #d9f2e0; color: #0f5a28; }
-.status-pending { background: #fff3c4; color: #593d00; }
+.status-in_progress { background: #fff3c4; color: #593d00; }
+.status-on_hold { background: #f7e7d6; color: #6b3d0f; }
 .status-resolved { background: #dce8ff; color: #1b3b7a; }
-.status-closed { background: #f7dede; color: #6b1515; }
+
+.status-update-form {
+  margin-top: 0.5rem;
+}
+
+.status-form-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-form-label {
+  font-weight: 600;
+}
+
+.status-form-row .form-select {
+  max-width: 220px;
+}
 
 .ticket-history,
 .ticket-description,

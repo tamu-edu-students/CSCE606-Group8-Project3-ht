@@ -13,10 +13,12 @@
       <%= form.text_field :subject %>
     </div>
 
-    <div class="form-field">
-      <%= form.label :status %>
-      <%= form.select :status, Ticket.statuses.keys.map { |s| [s.titleize, s] } %>
-    </div>
+    <% if policy(@ticket).change_status? %>
+      <div class="form-field">
+        <%= form.label :status %>
+        <%= form.select :status, Ticket.statuses.keys.map { |s| [s.titleize, s] } %>
+      </div>
+    <% end %>
 
     <div class="form-field">
       <%= form.label :priority %>

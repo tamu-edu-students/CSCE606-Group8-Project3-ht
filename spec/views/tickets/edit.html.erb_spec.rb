@@ -9,12 +9,21 @@ RSpec.describe "tickets/edit", type: :view do
       description: "MyText",
       priority: :low,
       requester: requester,
-      status: :pending
+      status: :in_progress
     )
   end
 
   before(:each) do
     assign(:ticket, ticket)
+    policy_double = instance_double(TicketPolicy, change_status?: false)
+    view.singleton_class.send(:define_method, :policy) do |record|
+      case record
+      when Ticket
+        policy_double
+      else
+        raise ArgumentError, "Unhandled policy lookup for #{record.inspect}"
+      end
+    end
   end
 
   it "renders the edit ticket form" do

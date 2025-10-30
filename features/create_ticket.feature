@@ -7,7 +7,6 @@ Feature: Create Ticket
     Given I am on the new ticket page
     When I fill in "Subject" with "Login issue"
     And I fill in "Description" with "Cannot access my account"
-    And I select "Open" from "Status"
     And I select "Low" from "Priority"
     And I select "Technical Issue" from "Category"
     And I press "Create Ticket"

@@ -17,13 +17,14 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    attrs = %i[subject description status priority category]
+    attrs = %i[subject description priority category]
+    attrs << :status if change_status?
     attrs << :assignee_id if user.admin? || user.agent?
     attrs
   end
 
   def update?
-    return false if record.closed?
+    return false if record.resolved?
     return true if user.admin?
     return true if user.agent?
     return true if user.requester? && record.requester == user
@@ -40,10 +41,14 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def close?
-    record.open? && record.requester == user
+    !record.resolved? && record.requester == user
   end
 
   def assign?
+    user.agent? || user.admin?
+  end
+
+  def change_status?
     user.agent? || user.admin?
   end
 

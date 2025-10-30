@@ -23,10 +23,10 @@ RSpec.describe CommentPolicy do
       it { expect(policy.create?).to be false }
     end
 
-    context 'when ticket is closed' do
+    context 'when ticket is resolved' do
       let(:comment) { build(:comment, ticket: ticket, author: user, visibility: :public) }
 
-      before { ticket.update!(status: :closed) }
+      before { ticket.update!(status: :resolved) }
 
       it { expect(policy.create?).to be false }
     end
@@ -41,10 +41,10 @@ RSpec.describe CommentPolicy do
       it { expect(policy.create?).to be true }
     end
 
-    context 'when ticket is closed' do
+    context 'when ticket is resolved' do
       let(:comment) { build(:comment, ticket: ticket, author: user, visibility: :public) }
 
-      before { ticket.update!(status: :closed) }
+      before { ticket.update!(status: :resolved) }
 
       it { expect(policy.create?).to be false }
     end
@@ -55,5 +55,11 @@ RSpec.describe CommentPolicy do
     let(:comment) { build(:comment, ticket: ticket, author: user, visibility: :internal) }
 
     it { expect(policy.create?).to be true }
+
+    context 'when ticket is resolved' do
+      before { ticket.update!(status: :resolved) }
+
+      it { expect(policy.create?).to be false }
+    end
   end
 end

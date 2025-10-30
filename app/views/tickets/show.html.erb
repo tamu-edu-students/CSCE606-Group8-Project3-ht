@@ -13,7 +13,7 @@
     </div>
     <div class="headline-right">
       <% if policy(@ticket).close? %>
-        <%= button_to "Close Ticket", close_ticket_path(@ticket), method: :patch, data: { confirm: "Close this ticket?" }, class: "btn btn-danger-outline" %>
+        <%= button_to "Mark as Resolved", close_ticket_path(@ticket), method: :patch, data: { confirm: "Mark this ticket as resolved?" }, class: "btn btn-danger-outline" %>
       <% end %>
       <% if policy(@ticket).destroy? %>
         <%= button_to "Destroy", ticket_path(@ticket), method: :delete, data: { confirm: "Delete this ticket?" }, class: "btn btn-danger" %>
@@ -24,22 +24,35 @@
   <section class="ticket-details">
     <dl class="details-list">
       <dt>Status</dt>
-      <dd><span class="status-badge status-<%= @ticket.status %>"><%= @ticket.status.titleize %></span></dd>
+      <dd>
+        <span class="status-badge status-<%= @ticket.status %>"><%= @ticket.status.titleize %></span>
+        <% if policy(@ticket).change_status? %>
+          <div class="status-update-form">
+            <%= form_with(model: @ticket, url: ticket_path(@ticket), method: :patch, local: true) do |form| %>
+              <div class="status-form-row">
+                <%= form.label :status, "Change status", class: "status-form-label" %>
+                <%= form.select :status, Ticket.statuses.keys.map { |key| [key.titleize, key] }, {}, class: "form-select" %>
+                <%= form.submit "Update Status", class: "btn btn-primary btn-sm" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </dd>
 
       <dt>Priority</dt>
       <dd><%= @ticket.priority.present? ? @ticket.priority.titleize : "Not set" %></dd>
 
-      <dt>Category</dt>
+      <dt>Ticket Type</dt>
       <dd><%= @ticket.category %></dd>
 
-      <dt>Requester</dt>
+      <dt>Submitter</dt>
       <dd><%= @ticket.requester.display_name %></dd>
 
       <dt>Assignee</dt>
       <dd><%= @ticket.assignee&.display_name || "Unassigned" %></dd>
 
       <% if @ticket.closed_at.present? %>
-        <dt>Closed At</dt>
+        <dt>Resolved At</dt>
         <dd><%= l(@ticket.closed_at, format: :long) %></dd>
       <% end %>
     </dl>
@@ -78,17 +91,7 @@
     <h2>Comments (<%= @comments.size %>)</h2>
     <% if @comments.any? %>
       <div class="comments-list">
-        <% @comments.each do |comment| %>
-          <article class="comment">
-            <header class="comment-meta">
-              <strong class="comment-author"><%= comment.author.display_name %></strong>
-              <span class="comment-visibility">(<%= comment.visibility.titleize %>)</span>
-              <time class="comment-time"><%= l(comment.created_at, format: :long) %></time>
-            </header>
-            <div class="comment-body"><%= simple_format(comment.body) %></div>
-          </article>
-          <hr>
-        <% end %>
+        <%= render @comments %>
       </div>
     <% else %>
       <p>No comments yet.</p>

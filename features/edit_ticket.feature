@@ -17,13 +17,10 @@ Feature: Edit Ticket
     Then I should see "Ticket was successfully updated"
     And I should see "Updated description text"
 
-  # --- Additional scenario: editing status ---
-  Scenario: Successfully changing the ticket status
+  # --- Additional scenario: status hidden from requester ---
+  Scenario: Status is not editable by the requester
     Given I am on the edit page for "Password Bug"
-    When I select "Closed" from "Status"
-    And I press "Update Ticket"
-    Then I should see "Ticket was successfully updated"
-    And I should see "Closed"
+    Then I should not see "Status"
 
   # --- Additional scenario: editing priority ---
   Scenario: Successfully changing the ticket priority

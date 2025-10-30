@@ -1,6 +1,6 @@
 class CommentPolicy < ApplicationPolicy
   def create?
-    return false unless record.ticket.open?
+    return false if record.ticket.resolved?
 
     if user.requester?
       record.ticket.requester == user && record.visibility_public?

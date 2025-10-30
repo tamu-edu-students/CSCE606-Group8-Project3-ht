@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "tickets/show", type: :view do
   let(:requester) { FactoryBot.create(:user, :requester) }
-  let(:ticket_policy) { instance_double(TicketPolicy, assign?: false, close?: false, destroy?: false) }
+  let(:ticket_policy) { instance_double(TicketPolicy, assign?: false, close?: false, destroy?: false, change_status?: false) }
   let(:comment_policy) { instance_double(CommentPolicy, create?: false) }
 
   before(:each) do
@@ -12,7 +12,7 @@ RSpec.describe "tickets/show", type: :view do
       description: "MyText",
       priority: :low,
       requester: requester,
-      status: :pending
+      status: :in_progress
     )
 
     assign(:ticket, ticket)

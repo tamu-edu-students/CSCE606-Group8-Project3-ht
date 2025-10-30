@@ -21,12 +21,16 @@ RSpec.describe TicketPolicy do
     it { expect(subject.permit?(:close)).to be true }
     it { expect(subject.permit?(:assign)).to be false }
 
-    context 'when ticket is closed' do
-      before { ticket.update(status: :closed) }
+    context 'when ticket is resolved' do
+      before { ticket.update(status: :resolved) }
       it { expect(subject.permit?(:update)).to be false }
       it { expect(subject.permit?(:edit)).to be false }
       it { expect(subject.permit?(:destroy)).to be false }
       it { expect(subject.permit?(:close)).to be false }
+    end
+
+    it 'does not permit status updates' do
+      expect(subject.permitted_attributes).not_to include(:status)
     end
   end
 
@@ -42,6 +46,7 @@ RSpec.describe TicketPolicy do
     it { expect(subject.permit?(:assign)).to be true }
     it { expect(subject.permit?(:destroy)).to be false }
     it { expect(subject.permit?(:close)).to be false }
+    it { expect(subject.permitted_attributes).to include(:status) }
   end
 
   context 'when user is admin' do
@@ -56,5 +61,6 @@ RSpec.describe TicketPolicy do
     it { expect(subject.permit?(:assign)).to be true }
     it { expect(subject.permit?(:destroy)).to be false }
     it { expect(subject.permit?(:close)).to be false }
+    it { expect(subject.permitted_attributes).to include(:status) }
   end
 end

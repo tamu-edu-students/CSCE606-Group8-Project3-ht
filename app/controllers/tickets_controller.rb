@@ -66,8 +66,8 @@ class TicketsController < ApplicationController
   def close
     authorize @ticket, :close?
 
-    if @ticket.update(status: :closed)
-      redirect_to @ticket, notice: "Ticket closed successfully."
+    if @ticket.update(status: :resolved)
+      redirect_to @ticket, notice: "Ticket resolved successfully."
     else
       redirect_to @ticket, alert: @ticket.errors.full_messages.to_sentence
     end

@@ -14,7 +14,7 @@ RSpec.describe "tickets/index", type: :view do
         description: "MyText",
         priority: :low,
         requester: requester,
-        status: :pending
+        status: :in_progress
       ),
       create(
         :ticket,
@@ -22,7 +22,7 @@ RSpec.describe "tickets/index", type: :view do
         description: "MyText",
         priority: :low,
         requester: requester,
-        status: :pending
+        status: :on_hold
       )
     ])
   end

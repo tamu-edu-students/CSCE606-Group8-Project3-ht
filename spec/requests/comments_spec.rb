@@ -51,8 +51,8 @@ RSpec.describe "Comments", type: :request do
       expect(Comment.order(:created_at).last.visibility).to eq("internal")
     end
 
-    it "prevents commenting on a closed ticket" do
-      ticket.update!(status: :closed)
+    it "prevents commenting on a resolved ticket" do
+      ticket.update!(status: :resolved)
       sign_in(requester)
 
       expect {
