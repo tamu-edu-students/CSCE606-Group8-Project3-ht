@@ -161,7 +161,7 @@ When('I leave the agent dropdown unassigned') do
   if page.has_css?('.assign-section')
     within('.assign-section') do
       # Prefer selecting the explicit blank option text
-      if page.has_select?('Assign to agent:', with_options: ['Unassigned'])
+      if page.has_select?('Assign to agent:', with_options: [ 'Unassigned' ])
         select 'Unassigned', from: 'Assign to agent:'
       else
         # Fallback: clear the select via setting empty value (RackTest)
@@ -169,7 +169,7 @@ When('I leave the agent dropdown unassigned') do
       end
     end
   else
-    if page.has_select?('Assign to agent:', with_options: ['Unassigned'])
+    if page.has_select?('Assign to agent:', with_options: [ 'Unassigned' ])
       select 'Unassigned', from: 'Assign to agent:'
     else
       find('#ticket_assignee_id', visible: :all).set('')

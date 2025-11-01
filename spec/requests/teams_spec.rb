@@ -36,6 +36,6 @@ RSpec.describe "Teams", type: :request do
       get teams_path
       expect(response.body).to include("Support")
       expect(response.body).not_to include("Ops")
-    end 
+    end
   end
 end

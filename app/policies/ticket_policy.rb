@@ -1,5 +1,4 @@
 class TicketPolicy < ApplicationPolicy
-  
   def index?
     true
   end

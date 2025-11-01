@@ -6,7 +6,7 @@ class CreateTeamMemberships < ActiveRecord::Migration[8.0]
       t.integer :role,    null: false, default: 0 # 0=member, 1=manager (optional)
       t.timestamps
     end
-    add_index :team_memberships, [:team_id, :user_id], unique: true
+    add_index :team_memberships, [ :team_id, :user_id ], unique: true
     add_index :team_memberships, :user_id
     add_foreign_key :team_memberships, :teams
     add_foreign_key :team_memberships, :users

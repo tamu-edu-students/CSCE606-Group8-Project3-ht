@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :comments, only: :create
   end
   resources :teams do
-    resources :team_memberships, only: [:create, :destroy]
+    resources :team_memberships, only: [ :create, :destroy ]
   end
   get    "/login",  to: "sessions#new"
   delete "/logout", to: "sessions#destroy"

@@ -38,6 +38,5 @@ RSpec.describe "Ticket assignment", type: :request do
 
     # Flash could be specific or generic depending on your controller
     expect(flash[:notice]).to match(/Ticket assigned to Bob|Ticket assignment updated\./)
-
   end
 end
