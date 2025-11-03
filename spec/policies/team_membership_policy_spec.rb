@@ -26,7 +26,7 @@ RSpec.describe TeamMembershipPolicy do
   describe "permitted_attributes" do
     it "returns [:user_id, :role] for sysadmin" do
       p = policy.new(admin, TeamMembership.new(team: team))
-      expect(p.permitted_attributes).to match_array([:user_id, :role])
+      expect(p.permitted_attributes).to match_array([ :user_id, :role ])
     end
 
     it "returns [] for non-sysadmin" do

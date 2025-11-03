@@ -152,24 +152,25 @@ class TicketsController < ApplicationController
     authorize @ticket, :assign?
 
     # Raw params
-    team_param     = params.dig(:ticket, :team_id)
-    assignee_param = params.dig(:ticket, :assignee_id)
+    ticket_params_raw = params[:ticket] || {}
+    team_param     = ticket_params_raw[:team_id]
+    assignee_param = ticket_params_raw[:assignee_id]
 
     updates = {}
 
     # Apply team if the key is present (even when blank)
-    if params[:ticket].key?(:team_id)
+    if ticket_params_raw.key?(:team_id)
       updates[:team_id] = team_param.presence # "" -> nil
     end
 
     # Apply assignee if the key is present (even when blank)
-    if params[:ticket].key?(:assignee_id)
+    if ticket_params_raw.key?(:assignee_id)
       updates[:assignee_id] = assignee_param.presence # "" -> nil
     end
 
     # If team is changing but caller didn't include assignee_id,
     # and current assignee doesn't belong to the new team, clear it to pass validation.
-    if updates.key?(:team_id) && updates[:team_id].present? && !params[:ticket].key?(:assignee_id)
+    if updates.key?(:team_id) && updates[:team_id].present? && !ticket_params_raw.key?(:assignee_id)
       new_team = Team.find(updates[:team_id])
       if @ticket.assignee_id.present? && !new_team.members.exists?(id: @ticket.assignee_id)
         updates[:assignee_id] = nil
