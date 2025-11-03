@@ -6,15 +6,6 @@
   </nav>
 
   <h1><%= @ticket.subject %></h1>
-
-  <p><strong>Status:</strong> <%= @ticket.status.to_s.titleize %></p>
-  <p><strong>Priority:</strong> <%= @ticket.priority %></p>
-  <p><strong>Requester:</strong> <%= @ticket.requester.display_name %></p>
-  <p><strong>Assignee:</strong> <%= @ticket.assignee&.display_name || 'Unassigned' %></p>
-  <p><strong>Category:</strong> <%= @ticket.category %></p>
-  <p><strong>Description:</strong></p>
-  <p><%= @ticket.description %></p>
-
   <div class="headline-bar">
     <div class="headline-left">
       <%= link_to "Back", tickets_path, class: "btn btn-secondary" %>
@@ -24,7 +15,6 @@
       <% if policy(@ticket).close? %>
         <%= button_to "Mark as Resolved", close_ticket_path(@ticket), method: :patch, data: { confirm: "Mark this ticket as resolved?" }, class: "btn btn-danger-outline" %>
       <% end %>
-      
     </div>
   </div>
 
@@ -151,8 +141,6 @@
     </section>
   <% end %>
 
-  <%= link_to 'Edit', edit_ticket_path(@ticket) %>
-  <%= link_to 'Back', tickets_path %>
   <% if policy(@ticket).destroy? %>
     <%= button_to "Destroy", ticket_path(@ticket), method: :delete, data: { confirm: "Delete this ticket?" }, class: "btn btn-danger" %>
   <% end %>
