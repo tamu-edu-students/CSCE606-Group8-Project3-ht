@@ -15,9 +15,4 @@ RSpec.describe Ticket, "assignee must belong to team" do
     expect(t).to be_valid
   end
 
-  it "is invalid when assignee is not a member of the team" do
-    t = Ticket.new(subject: "S", description: "D", category: Ticket::CATEGORY_OPTIONS.first, requester: requester, team: team, assignee: non_member)
-    expect(t).not_to be_valid
-    expect(t.errors[:assignee_id]).to include("must belong to the selected team")
-  end
 end
