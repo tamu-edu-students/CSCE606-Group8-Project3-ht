@@ -36,13 +36,8 @@ RSpec.describe "tickets/index", type: :view do
 
   it "renders a list of tickets" do
     render
-<<<<<<< HEAD
     assert_select 'h2>a', text: "Title", count: 2
     assert_select 'span.status-badge', text: /In Progress|On Hold/, count: 2
     assert_select 'span.status-badge', text: /Low/, count: 2
-=======
-    assert_select 'h2.ticket-card__title>a', text: "Title", count: 2
-    assert_select 'p.ticket-card__excerpt', count: 2
->>>>>>> d7f7a33e94ac097e6f0d21e753bd97743e7d1fa6
   end
 end

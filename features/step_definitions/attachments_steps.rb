@@ -24,7 +24,6 @@ When("I submit the ticket form") do
 end
 
 When("I remove the attachment named {string}") do |filename|
-<<<<<<< HEAD
   # find the attachment item that contains the filename and check the remove checkbox inside it
   within('.attachment-manage-list') do
     item = find('.attachment-manage-item', text: filename)
@@ -35,17 +34,6 @@ When("I remove the attachment named {string}") do |filename|
       checkbox = item.find('input[type="checkbox"]', visible: false)
     end
     checkbox.set(true)
-=======
-  # find the list item that contains the filename and check the remove checkbox inside it
-  # Support multiple possible class names for the attachments list across themes
-  container_selector = if page.has_css?('.existing-attachments')
-    '.existing-attachments'
-  elsif page.has_css?('.attachment-list')
-    '.attachment-list'
-  else
-    # fallback to any list containing the filename
-    nil
->>>>>>> d7f7a33e94ac097e6f0d21e753bd97743e7d1fa6
   end
 
     # Support multiple attachments-list renderings used by the app

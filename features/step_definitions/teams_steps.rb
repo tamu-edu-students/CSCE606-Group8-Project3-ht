@@ -89,29 +89,7 @@ end
 # ---------- Ticket assignment UI interactions ----------
 
 When('I select {string} from the team dropdown') do |team_name|
-<<<<<<< HEAD
   select team_name, from: "ticket_team_id"
-=======
-  if page.has_css?('.assign-section')
-    within('.assign-section') do
-      begin
-        select team_name, from: 'Assign to team:'
-      rescue Capybara::ElementNotFound
-        if page.has_select?('ticket[team_id]')
-          select team_name, from: 'ticket[team_id]'
-        else
-          raise
-        end
-      end
-    end
-  else
-    if page.has_select?('ticket[team_id]')
-      select team_name, from: 'ticket[team_id]'
-    else
-      select team_name, from: 'Assign to team:'
-    end
-  end
->>>>>>> d7f7a33e94ac097e6f0d21e753bd97743e7d1fa6
 end
 
 
@@ -175,26 +153,7 @@ end
 # ---- When steps ----
 
 When('I leave the agent dropdown unassigned') do
-<<<<<<< HEAD
   select 'Unassigned', from: 'ticket_assignee_id'
-=======
-  if page.has_css?('.assign-section')
-    within('.assign-section') do
-      # Prefer selecting the explicit blank option text
-      if page.has_select?('Assign to agent:', with_options: [ 'Unassigned' ])
-        select 'Unassigned', from: 'Assign to agent:'
-      else
-        find('#ticket_assignee_id', visible: :all).set('')
-      end
-    end
-  else
-    if page.has_select?('Assign to agent:', with_options: [ 'Unassigned' ])
-      select 'Unassigned', from: 'Assign to agent:'
-    else
-      find('#ticket_assignee_id', visible: :all).set('')
-    end
-  end
->>>>>>> d7f7a33e94ac097e6f0d21e753bd97743e7d1fa6
 end
 
 # ---- Then steps ----
