@@ -1,5 +1,5 @@
 module ApplicationHelper
-  require 'redcarpet'
+  require "redcarpet"
 
   def render_markdown(text)
     return "" if text.blank?
@@ -7,7 +7,7 @@ module ApplicationHelper
     renderer = Redcarpet::Render::HTML.new(
       filter_html: true,
       hard_wrap: true,
-      link_attributes: { rel: 'nofollow', target: "_blank" }
+      link_attributes: { rel: "nofollow", target: "_blank" }
     )
 
     markdown = Redcarpet::Markdown.new(renderer,

@@ -1,4 +1,3 @@
-# spec/requests/tickets_controller_spec.rb
 require "rails_helper"
 
 RSpec.describe TicketsController, type: :request do

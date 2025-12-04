@@ -5,6 +5,9 @@ class Ticket < ApplicationRecord
     "Feature Request"
   ].freeze
 
+  has_paper_trail only: [ :status, :priority, :assignee_id, :team_id, :approval_status, :closed_at ],
+                  on: [ :create, :update ]
+
   belongs_to :requester, class_name: "User"
   belongs_to :assignee, class_name: "User", optional: true
   belongs_to :approver, class_name: "User", optional: true

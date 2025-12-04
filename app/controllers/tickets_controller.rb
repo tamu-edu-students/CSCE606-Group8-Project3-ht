@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
     end
 
     @ticket.assign_attributes(ticket_params)
-    
+
     if (current_user&.agent? || current_user&.admin?) && params.dig(:ticket, :approval_status).present?
       approval_param = params.dig(:ticket, :approval_status).to_s
       case approval_param
@@ -255,14 +255,14 @@ class TicketsController < ApplicationController
   def apply_sort!
     sort_param = params[:sort].presence || "created_at_desc"
     @tickets = case sort_param
-      when "created_at_asc" then @tickets.order(created_at: :asc)
-      when "created_at_desc" then @tickets.order(created_at: :desc)
-      when "priority_asc" then @tickets.order(priority: :asc, created_at: :desc)
-      when "priority_desc" then @tickets.order(priority: :desc, created_at: :desc)
-      when "status_asc" then @tickets.order(status: :asc, created_at: :desc)
-      when "status_desc" then @tickets.order(status: :desc, created_at: :desc)
-      else @tickets.order(created_at: :desc)
-      end
+    when "created_at_asc" then @tickets.order(created_at: :asc)
+    when "created_at_desc" then @tickets.order(created_at: :desc)
+    when "priority_asc" then @tickets.order(priority: :asc, created_at: :desc)
+    when "priority_desc" then @tickets.order(priority: :desc, created_at: :desc)
+    when "status_asc" then @tickets.order(status: :asc, created_at: :desc)
+    when "status_desc" then @tickets.order(status: :desc, created_at: :desc)
+    else @tickets.order(created_at: :desc)
+    end
   end
 
   def load_filter_options
