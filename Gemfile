@@ -88,3 +88,5 @@ gem "pundit", "~> 2.5"
 # using Chart.js from CDN, no gem needed
 
 gem "redcarpet", "~> 3.6"
+
+gem 'paper_trail'

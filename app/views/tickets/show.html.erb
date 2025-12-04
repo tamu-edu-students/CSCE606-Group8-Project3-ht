@@ -153,21 +153,36 @@
       <% end %>
 
       <div class="sidebar-card">
-        <span class="sidebar-heading">Dates</span>
-        <div class="sidebar-data-row">
-          <span class="sidebar-label">Created</span>
-          <span class="sidebar-value" title="<%= @ticket.created_at %>"><%= time_ago_in_words(@ticket.created_at) %> ago</span>
-        </div>
-        <div class="sidebar-data-row">
-          <span class="sidebar-label">Updated</span>
-          <span class="sidebar-value" title="<%= @ticket.updated_at %>"><%= time_ago_in_words(@ticket.updated_at) %> ago</span>
-        </div>
-        <% if @ticket.closed_at %>
-          <div class="sidebar-data-row">
-            <span class="sidebar-label">Resolved</span>
-            <span class="sidebar-value"><%= l(@ticket.closed_at, format: :short) %></span>
+        <span class="sidebar-heading">Activity Log</span>
+        
+        <div class="audit-timeline" style="margin-top: 10px; padding-left: 10px;">
+          <% @ticket.versions.reverse_each do |version| %>
+            <div class="audit-entry" style="position: relative; padding-left: 15px; border-left: 2px solid #e1e4e8; padding-bottom: 15px;">
+              <div style="position: absolute; left: -6px; top: 0; width: 10px; height: 10px; background: #0366d6; border-radius: 50%; border: 2px solid white;"></div>
+              
+              <div style="line-height: 1.2;">
+                <div style="font-size: 0.85rem; color: #333;">
+                  <%= render_activity_log(version) %>
+                </div>
+                <small style="color: #6a737d; font-size: 0.75rem;">
+                  <%= version.created_at.strftime("%b %d, %l:%M %p") %>
+                </small>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="audit-entry" style="position: relative; padding-left: 15px;">
+            <div style="position: absolute; left: -6px; top: 0; width: 10px; height: 10px; background: #28a745; border-radius: 50%; border: 2px solid white;"></div>
+            <div style="line-height: 1.2;">
+              <div style="font-size: 0.85rem; color: #333;">
+                Ticket Created
+              </div>
+              <small style="color: #6a737d; font-size: 0.75rem;">
+                <%= @ticket.created_at.strftime("%b %d, %l:%M %p") %>
+              </small>
+            </div>
           </div>
-        <% end %>
+        </div>
       </div>
 
       <% if policy(@ticket).destroy? %>
