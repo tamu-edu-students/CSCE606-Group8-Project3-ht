@@ -32,7 +32,6 @@ RSpec.describe TicketPolicy do
     it 'does not permit status updates' do
       expect(subject.permitted_attributes).not_to include(:status)
     end
-
   end
 
   context 'when user is staff' do

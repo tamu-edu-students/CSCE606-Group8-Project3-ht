@@ -20,13 +20,12 @@ RSpec.describe "Ticket attachments", type: :request do
   end
 
   describe "PATCH /tickets/:id (attachments)" do
-
     it "allows an agent to upload attachments" do
       sign_in(agent)
 
       patch ticket_path(ticket), params: {
         ticket: {
-          attachments: [file_upload]
+          attachments: [ file_upload ]
         }
       }
 
@@ -41,7 +40,7 @@ RSpec.describe "Ticket attachments", type: :request do
 
       patch ticket_path(ticket), params: {
         ticket: {
-          attachments: [file_upload]
+          attachments: [ file_upload ]
         }
       }
 
@@ -51,12 +50,11 @@ RSpec.describe "Ticket attachments", type: :request do
     end
 
     it "allows an agent to remove an existing attachment" do
-      
       sign_in(agent)
 
       patch ticket_path(ticket), params: {
         ticket: {
-          attachments: [file_upload]
+          attachments: [ file_upload ]
         }
       }
       ticket.reload
@@ -65,7 +63,7 @@ RSpec.describe "Ticket attachments", type: :request do
       att_id = ticket.attachments.first.id
 
       patch ticket_path(ticket), params: {
-        ticket: { remove_attachment_ids: [att_id] }
+        ticket: { remove_attachment_ids: [ att_id ] }
       }
 
       ticket.reload
@@ -73,18 +71,17 @@ RSpec.describe "Ticket attachments", type: :request do
     end
 
     it "removes attachments even when requester attempts removal (controller behavior)" do
-     
       sign_in(agent)
-      patch ticket_path(ticket), params: { ticket: { attachments: [file_upload] } }
+      patch ticket_path(ticket), params: { ticket: { attachments: [ file_upload ] } }
       ticket.reload
       expect(ticket.attachments).to be_attached
 
-      
+
       sign_in(requester)
       att_id = ticket.attachments.first.id
 
       patch ticket_path(ticket), params: {
-        ticket: { remove_attachment_ids: [att_id] }
+        ticket: { remove_attachment_ids: [ att_id ] }
       }
 
       ticket.reload

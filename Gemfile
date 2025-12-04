@@ -89,4 +89,4 @@ gem "pundit", "~> 2.5"
 
 gem "redcarpet", "~> 3.6"
 
-gem 'paper_trail'
+gem "paper_trail"
