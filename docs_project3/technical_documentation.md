@@ -67,7 +67,7 @@ bin/rails s
 
 ```
 
-Access the app at `http://localhost:3000`. Use the "Developer Login" route (`/dev_login`) if you do not have Google Credentials set up locally.
+Access the app at `http://127.0.0.1:3000/`. Use the "Developer Login" route (`/dev_login`) if you do not have Google Credentials set up locally.
 
 #### 5. Deployment (Heroku)
 
