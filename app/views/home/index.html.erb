@@ -1,4 +1,10 @@
 <div class="home-index">
   <h1>Welcome</h1>
   <p>This is your home page. The navbar above is shared everywhere.</p>
+  
+  <div class="stats-section">
+    <h2>Application Statistics</h2>
+    <p><strong>Total Tickets:</strong> <%= Ticket.count %></p>
+    <p><strong>Total Users:</strong> <%= User.count %></p>
+  </div>
 </div>
